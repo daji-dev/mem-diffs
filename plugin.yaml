@@ -1,0 +1,30 @@
+name: mem-diffs
+version: 0.7.1
+requires_hermes: ">=0.23.1"
+description: |-
+  Make updates to memory, skills, and self-improvement reviews expand on-click to show the diff.
+  Set display.memory_notifications to off if using this, or you'll see duplicate non-clickable notifications
+  (config.yaml → display). Existing chats keep their old setting, so start a new chat afterwards.
+manifest_version: 2
+api_version: 1
+license: MIT
+tags: [memory, skills, desktop, transparency]
+provides_hooks:
+  - pre_llm_call
+  - transform_llm_output
+  - on_session_delete
+provides_middleware:
+  - tool_execution
+  - llm_request
+config_schema:
+  review_popover:
+    type: bool
+    default: false
+    label: "Open review diffs in a pop-out"
+    description: "Off: a Self-improvement review row expands in place, like the app's tool rows. On: it opens a floating pop-out instead."
+  review_wording:
+    type: str
+    default: "on"
+    choices: ["on", "verbose"]
+    label: "Review wording"
+    description: English wording for review rows; on matches native concise notices, verbose includes previews.
